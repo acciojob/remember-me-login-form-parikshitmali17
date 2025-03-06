@@ -20,7 +20,6 @@
 	
 // })
 
-// Selecting elements
 let submit = document.querySelector("#submit");
 let existingLogInBtn = document.querySelector("#existing");
 let rememberCheckbox = document.getElementById("checkbox");
@@ -28,37 +27,39 @@ let usernameInput = document.querySelector("#username");
 let passwordInput = document.getElementById("password");
 
 // Check if credentials exist in localStorage
-const savedCredentials = JSON.parse(localStorage.getItem("credentials"));
-if (savedCredentials) {
-    existingLogInBtn.style.display = "block";
-}
+document.addEventListener("DOMContentLoaded", () => {
+    let savedCredentials = localStorage.getItem("credentials");
+    if (savedCredentials) {
+        existingLogInBtn.style.display = "block";
+    }
+});
 
-// Form submit event
+// Submit button event listener
 submit.addEventListener("click", (event) => {
-    event.preventDefault(); // Prevents default form submission
-
+    event.preventDefault();  // Prevent form from refreshing the page
+    
     let username = usernameInput.value.trim();
     let password = passwordInput.value.trim();
 
     if (username === "" || password === "") {
-        alert("Username and password cannot be empty.");
+        alert("Please enter both username and password.");
         return;
     }
 
     alert(`Logged in as ${username}`);
 
     if (rememberCheckbox.checked) {
-        // Store credentials in localStorage
         localStorage.setItem("credentials", JSON.stringify({ user: username, pass: password }));
-        existingLogInBtn.style.display = "block";
+        existingLogInBtn.style.display = "block"; // Show "Login as existing user" button
     } else {
-        // Clear stored credentials if "Remember Me" is unchecked
-        localStorage.removeItem("credentials");
+        localStorage.removeItem("credentials"); // Remove saved credentials
+        existingLogInBtn.style.display = "none";
     }
 });
 
-// Existing user login button
+// Existing user login event listener
 existingLogInBtn.addEventListener("click", () => {
+    let savedCredentials = JSON.parse(localStorage.getItem("credentials"));
     if (savedCredentials) {
         alert(`Logged in as ${savedCredentials.user}`);
     }
