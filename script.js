@@ -9,14 +9,14 @@ let isSaved=false;
 submit.addEventListiner('click',()=>{
 	alert(`Logged in as ${username}`)
 	if(rememberCheckbox){
-		localStorage.setItem('user',JSON.Stringfy({user: username, pass:password}))
+		localStorage.setItem(JSON.Stringfy({user: username, pass:password}))
 	isSaved=true;
 		alert(`Logged in as ${username}`)
 	}else{
 		localStorage.clear('')	
 	}
 
-	(isSaved) ? ExistingLogInBtn.style.display=='none' :null
+	(isSaved) ? ExistingLogInBtn : ExistingLogInBtn.style.display=='none'
 	
 })
 
